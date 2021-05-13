@@ -23,6 +23,7 @@ import java.nio.Buffer;
 final class UnsafeUtil
 {
     public static final Unsafe UNSAFE;
+    public static final int ARRAY_BYTE_BASE_OFFSET;
     private static final Field ADDRESS_ACCESSOR;
  
     private UnsafeUtil()
@@ -35,6 +36,7 @@ final class UnsafeUtil
             Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
             theUnsafe.setAccessible(true);
             UNSAFE = (Unsafe) theUnsafe.get(null);
+            ARRAY_BYTE_BASE_OFFSET = UNSAFE.arrayBaseOffset(byte[].class);
         }
         catch (Exception e) {
             throw new SnappyError(SnappyErrorCode.UNSUPPORTED_PLATFORM, "pure-java snappy requires access to sun.misc.Unsafe");

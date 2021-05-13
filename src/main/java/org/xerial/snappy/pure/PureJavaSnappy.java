@@ -1,7 +1,7 @@
 package org.xerial.snappy.pure;
 
 import static org.xerial.snappy.pure.UnsafeUtil.getAddress;
-import static sun.misc.Unsafe.ARRAY_BYTE_BASE_OFFSET;
+import static org.xerial.snappy.pure.UnsafeUtil.ARRAY_BYTE_BASE_OFFSET;
 
 import java.io.IOException;
 import java.lang.ref.SoftReference;
@@ -148,7 +148,7 @@ public class PureJavaSnappy implements SnappyApi
         }
         else if (compressed.hasArray()) {
             inputBase = compressed.array();
-            inputAddress = ARRAY_BYTE_BASE_OFFSET + compressed.arrayOffset() + compressed.position();
+            inputAddress =ARRAY_BYTE_BASE_OFFSET + compressed.arrayOffset() + compressed.position();
             inputLimit = ARRAY_BYTE_BASE_OFFSET + compressed.arrayOffset() + compressed.limit();
         }
         else {
