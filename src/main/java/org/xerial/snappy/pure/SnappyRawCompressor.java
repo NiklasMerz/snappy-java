@@ -244,7 +244,14 @@ public final class SnappyRawCompressor
             if (nextEmitAddress < blockLimit) {
                 int literalLength = (int) (blockLimit - nextEmitAddress);
                 output = emitLiteralLength(outputBase, output, literalLength);
-                UNSAFE.copyMemory(inputBase, nextEmitAddress, outputBase, output, literalLength);
+
+                // https://stackoverflow.com/questions/7060215/how-can-i-get-the-memory-location-of-a-object-in-java
+                Object[] array = new Object[] {inputBase};
+                long inputAddr = UNSAFE.getLong(inputBase, nextEmitAddress);
+                array = new Object[] {outputBase};
+                long outputAddr = UNSAFE.getLong(outputBase, output);
+
+                UNSAFE.copyMemory(inputAddr, outputAddr, literalLength);
                 output += literalLength;
             }
         }
